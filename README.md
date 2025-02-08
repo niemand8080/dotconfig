@@ -50,14 +50,16 @@ else
         git pull origin main
     else 
         echo "Dotconfig already up to date."
-#        exit 0
+        if [[ $FLAG != "force" ]]; then
+            exit 0
+        fi
     fi
 fi
 
 echo "Syncing dotconfig..."
 
 while IFS= read -d $'\0' -r file ; do 
-    name="${file/$REPO_DIR\//''}"
+    name="${file/$REPO_DIR\//}"
     if $(echo "${INSTALL[@]}" | grep -q "$name"); then
         echo "Updateing $name config.."
         rsync -av --delete "$REPO_DIR/$name/src/" "$CONFIG_DIR/$name/"
