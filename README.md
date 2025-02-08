@@ -9,11 +9,13 @@ Run this update srcipt to update your nvim config.
 
 FLAG=$1
 
-INSTALL=(nvim-config tmux)
+INSTALL=(tmux)
 
 GIT_URL="https://github.com/niemand8080/dotconfig"
 REPO_DIR="$HOME/.local/share/dotconfig"
 CONFIG_DIR="$HOME/.config"
+
+mkdir -p "$HOME/.local/share"
 
 if [[ ! -d "$REPO_DIR" ]]; then
     if [[ $FLAG == "force" ]]; then
@@ -34,16 +36,13 @@ else
         git pull origin main
     else 
         echo "Dotconfig already up to date."
-        exit 0
+#        exit 0
     fi
 fi
 
 echo "Syncing dotconfig..."
-for dir in "$REPO_DIR/*"; do
-    if [ -d "$dir" ]; then
-        echo "$dir"
-    fi
-        echo "$dir"
+for dir in "$(find "$REPO_DIR" -type d -depth -maxdepth 1 \( ! -iname ".*" \))"; do
+    echo "$(dir)"
 done
 # rsync -av --delete "$REPO_DIR/src/" "$NVIM_CONFIG_DIR/"
 
