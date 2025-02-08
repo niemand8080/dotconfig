@@ -6,7 +6,7 @@ Run this to update the neovim config.
 
 ### Requirements
 
-[neovim >=0.9.0](https://github.com/neovim/neovim/wiki/)
+[neovim >=0.10.0](https://github.com/neovim/neovim/wiki/)
 
 #### NPM
 
