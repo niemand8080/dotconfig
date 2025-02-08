@@ -30,3 +30,6 @@ vim.opt.scrolloff = 8
 vim.opt.updatetime = 250
 
 vim.opt.colorcolumn = "80"
+
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
