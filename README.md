@@ -63,7 +63,6 @@ while IFS= read -d $'\0' -r file ; do
     if $(echo "${INSTALL[@]}" | grep -q "$name"); then
         echo "Updateing $name config.."
         rsync -a --delete "$REPO_DIR/$name/src/" "$CONFIG_DIR/$name/"
-        echo "$?"
         if [ $? ]; then
             echo "Successfully updated $name config!"
         else
