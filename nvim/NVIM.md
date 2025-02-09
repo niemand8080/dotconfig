@@ -49,6 +49,12 @@ Homebrew
 brew install --cask font-hack-nerd-font
 ```
 
+or JetBrains Mono Nerd Font
+
+```
+brew install --cask font-jetbrains-mono-nerd-font
+```
+
 Apt
 
 ```
