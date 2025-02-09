@@ -26,7 +26,7 @@ return {
         -- Mason setup to install and manage LSP servers
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = { "html", "cssls", "jsonls", "ts_ls", "lua_ls", "bashls" }, -- Add more as needed
+            ensure_installed = { "tailwindcss", "eslint", "html", "cssls", "jsonls", "ts_ls", "lua_ls", "bashls" }, -- Add more as needed
             automatic_installation = true,                                                 -- Automatically install if not present
             handlers = {
                 function(server_name)                                                      -- Default handler for most servers
@@ -35,6 +35,17 @@ return {
                     })
                 end,
 
+                -- Custom config for ts_ls
+                ["ts_ls"] = function()
+                    require("lspconfig").ts_ls.setup({
+                        capabilities = lspconfig_defaults.capabilities,
+                        inti_options = {
+                            preferences = {
+                                disableSuggestoins = true,
+                            }
+                        }
+                    })
+                end,
                 -- Custom config for Lua LSP
                 ["lua_ls"] = function()
                     require("lspconfig").lua_ls.setup({
