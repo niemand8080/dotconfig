@@ -21,3 +21,7 @@ tmux source ~/.config/tmux/tmux.conf
 
 # now press Ctrl + Space and then Shift + I
 ```
+
+## Tips
+
+If you are on Mac (I don't know if its the same for other OS) make sure you disable any Ctrl + Space keybinds in the Systemsettings > Keyboard > Input Sources. I spend more than 1 hour finding this out...
