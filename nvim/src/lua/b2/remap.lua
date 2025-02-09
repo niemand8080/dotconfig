@@ -9,6 +9,10 @@ vim.keymap.set("n", "<leader>pv", function()
 end)
 vim.keymap.set("n", "<leader>r", "<cmd>!%:p<CR>")
 
+vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>")
+vim.keymap.set("n", "<leader>x", ":.lua<CR>")
+vim.keymap.set("v", "<leader>x", ":lua<CR>")
+
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '>-2<CR>gv=gv")
 

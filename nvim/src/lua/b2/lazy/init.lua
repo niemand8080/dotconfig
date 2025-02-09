@@ -7,7 +7,7 @@ return {
     -- { '3rd/image.nvim' }, -- Uncomment the lines in the tree.lua file
     -- For telescope
     { "nvim-lua/plenary.nvim" }, -- Also for nvim-tree
-    { 'nvim-telescope/telescope-fzf-native.nvim' },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     -- VimBeGood
     { 'ThePrimeagen/vim-be-good' },
     -- For LSP
