@@ -29,10 +29,12 @@ return {
             ensure_installed = { "tailwindcss", "rust_analyzer", "eslint", "html", "cssls", "jsonls", "ts_ls", "lua_ls", "bashls" }, -- Add more as needed
             automatic_installation = true,                                                                                           -- Automatically install if not present
             handlers = {
-                function(server_name)                                                                                                -- Default handler for most servers
-                    require("lspconfig")[server_name].setup({
-                        capabilities = lspconfig_defaults.capabilities
-                    })
+                function(server_name) -- Default handler for servers
+                    if server_name ~= "rust_analyzer" then
+                        require("lspconfig")[server_name].setup({
+                            capabilities = lspconfig_defaults.capabilities
+                        })
+                    end
                 end,
 
                 -- Custom config for ts_ls
