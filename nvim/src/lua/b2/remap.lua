@@ -7,14 +7,34 @@ vim.keymap.set("n", "<leader>pv", function()
         vim.cmd.Ex()
     end
 end)
-vim.keymap.set("n", "<leader>r", "<cmd>!%:p<CR>")
 
-vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>")
-vim.keymap.set("n", "<leader>x", ":.lua<CR>")
-vim.keymap.set("v", "<leader>x", ":lua<CR>")
+vim.keymap.set("n", "<leader>r", function()
+    local filetype = vim.bo.filetype
+    local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
+
+    local command = "!%:p"
+
+    if filetype == 'rust' then
+        command = "cargo run"
+    end
+    if in_tmux then
+        local pane_id = vim.fn.system("tmux split-window -h -P -F '#{pane_id}'"):gsub("%s+", "")
+        if pane_id and pane_id ~= "" then
+            vim.fn.system(string.format('tmux resize-pane -Z'))
+            vim.fn.system(string.format(
+                'tmux send-keys -t %s "%s; echo Press Enter or <prefix> + x to close...; read; tmux kill-pane" Enter',
+                pane_id, command
+            ))
+        else
+            print("Failed to create a pane...")
+        end
+    else
+        vim.cmd(string.format("term bash -c '%s; echo Press Enter to continue...; read'", command))
+    end
+end)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '>-2<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
@@ -32,9 +52,6 @@ vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 
 vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
