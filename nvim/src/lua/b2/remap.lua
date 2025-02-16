@@ -22,14 +22,14 @@ vim.keymap.set("n", "<leader>r", function()
         if pane_id and pane_id ~= "" then
             vim.fn.system(string.format('tmux resize-pane -Z'))
             vim.fn.system(string.format(
-                'tmux send-keys -t %s "%s; echo Press Enter or <prefix> + x to close...; read; tmux kill-pane" Enter',
+                'tmux send-keys -t %s "%s; echo Press Enter to close...; read; tmux kill-pane" Enter',
                 pane_id, command
             ))
         else
             print("Failed to create a pane...")
         end
     else
-        vim.cmd(string.format("term bash -c '%s; echo Press Enter to continue...; read'", command))
+        vim.cmd(string.format("term bash -c '%s; echo Press Enter to close...; read'", command))
     end
 end)
 

@@ -151,6 +151,20 @@ return {
                         fallback()
                     end
                 end, { "i", "s", "c" }),
+                ['<S-Tab>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    else
+                        fallback()
+                    end
+                end, { "i", "s", "c" }),
+                ['<CR>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.confirm()
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
             }
         })
 
