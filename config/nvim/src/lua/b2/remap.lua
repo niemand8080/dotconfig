@@ -9,14 +9,54 @@ vim.keymap.set("n", "<leader>pv", function()
 end)
 
 vim.keymap.set("n", "<leader>r", function()
+    local key = vim.fn.getcharstr()
+    print(key)
     local filetype = vim.bo.filetype
     local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
 
-    local command = "!%:p"
+    local run_command
+    local test_command
+    local build_command
 
-    if filetype == 'rust' then
-        command = "cargo run"
+    if filetype == "rust" then
+        run_command = "cargo run"
+        test_command = "cargo test"
+        build_command = "cargo build"
+    -- elseif util.contains({ "javascript", "typescript" }, filetype) then
+    --     run_command = "pnpm run dev"
+    --     test_command = "pnpm run test"
+    --     build_command = "pnpm run build"
     end
+
+    local command -- The command that will be executed
+
+    if key == "r" then
+        if run_command then
+            command = run_command
+        else
+            print(string.format("No run command found for file of tipe %s!", filetype))
+        end
+    elseif key == "t" then
+        if test_command then
+            command = test_command
+        else
+            print(string.format("No test command found for file type %s!", filetype))
+        end
+    elseif key == "b" then
+        if build_command then
+            command = build_command
+        else
+            print(string.format("No build command found for file type %s!", filetype))
+        end
+    else
+        print(string.format("No action for key (%s) found!", key))
+        return
+    end
+
+    if not command then
+        return
+    end
+
     if in_tmux then
         local pane_id = vim.fn.system("tmux split-window -h -P -F '#{pane_id}'"):gsub("%s+", "")
         if pane_id and pane_id ~= "" then
