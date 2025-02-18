@@ -178,7 +178,7 @@ return {
                         fallback()
                     end
                 end, { "i", "s", "c" }),
-                ['<CR>'] = cmp.mapping(function(fallback)
+                ['<C-CR>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.confirm()
                     else
