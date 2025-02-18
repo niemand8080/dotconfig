@@ -36,8 +36,12 @@ end)
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- Scrolling
+vim.keymap.set("n", "<C-d>", "<C-d>zz")     -- down
+vim.keymap.set("n", "<C-u>", "<C-u>zz")     -- up
+vim.keymap.set("n", "<C-ö>", "20zh")        -- left
+vim.keymap.set("n", "<C-ü>", "20zl")        -- right
+
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 

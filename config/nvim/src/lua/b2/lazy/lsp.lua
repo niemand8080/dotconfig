@@ -69,17 +69,37 @@ return {
         vim.api.nvim_create_autocmd('LspAttach', {
             desc = 'LSP actions',
             callback = function(event)
+                local client = vim.lsp.get_client_by_id(event.data.client_id)
                 local opts = { buffer = event.buf }
-                local file_type = vim.bo.filetype
 
-                if file_type == "rust" then
+                local border = "rounded"
+
+                -- specific keymaps
+                if client and client.name == "rust_analyzer" then
                     vim.keymap.set('n', 'K', function() vim.cmd.RustLsp({ 'hover', 'actions' }) end, opts)
                     vim.keymap.set('n', '<leader>la', function() vim.cmd.RustLsp('codeAction') end, opts)
                 else
+                    -- fallback keymaps
                     vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
                     vim.keymap.set('n', '<leader>la', function() vim.lsp.buf.code_action() end, opts)
                 end
 
+                -- styling
+                client.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+                client.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
+                    { border = border })
+                client.handlers["textDocument/codeAction"] = vim.lsp.with(vim.lsp.handlers.code_action,
+                    { border = border })
+                client.handlers["window/showMessage"] = function(_, result)
+                    local lvl = ({ "ERROR", "WARN", "INFO", "DEBUG" })[result.type]
+                    vim.notify(result.message, lvl, { title = client and client.name })
+                end
+
+                vim.diagnostic.config {
+                    float = { border = border },
+                }
+
+                -- global keymaps
                 vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
                 vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
                 vim.keymap.set('n', '<leader>lws', function() vim.lsp.buf.workspace_symbol() end, opts)
@@ -165,12 +185,21 @@ return {
                         fallback()
                     end
                 end, { "i", "s" }),
+                ['<C-u>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.scroll_docs(-4)
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
+                ['<C-d>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.scroll_docs(4)
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
             }
         })
-
-        -- diagnostics style
-        vim.diagnostic.config {
-            float = { border = "rounded" },
-        }
     end
 }

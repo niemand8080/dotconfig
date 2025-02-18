@@ -21,7 +21,7 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-vim.opt.wrap = true
+vim.opt.wrap = false
 
 vim.opt.termguicolors = true
 
