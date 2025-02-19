@@ -10,18 +10,19 @@ end)
 
 vim.keymap.set("n", "<leader>r", function()
     local key = vim.fn.getcharstr()
-    print(key)
     local filetype = vim.bo.filetype
     local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
 
     local run_command
     local test_command
     local build_command
+    local custom_command_preset = ""
 
     if filetype == "rust" then
         run_command = "cargo run"
         test_command = "cargo test"
         build_command = "cargo build"
+        custom_command_preset = "cargo "
     -- elseif util.contains({ "javascript", "typescript" }, filetype) then
     --     run_command = "pnpm run dev"
     --     test_command = "pnpm run test"
@@ -47,6 +48,13 @@ vim.keymap.set("n", "<leader>r", function()
             command = build_command
         else
             print(string.format("No build command found for file type %s!", filetype))
+        end
+    elseif key == "c" then
+        local custom_command = vim.fn.input("Custom command: ", custom_command_preset)
+        if custom_command then
+            command = custom_command
+        else
+            return
         end
     else
         print(string.format("No action for key (%s) found!", key))
