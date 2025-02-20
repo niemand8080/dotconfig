@@ -4,13 +4,11 @@
 
 Just some complex modifications for Karabiner I use, so I can copypasta them...
 
-### For the leader-key app
+### Right cmd + left cmd
 
-I made this for the [leader-key](https://github.com/mikker/LeaderKey.app) app.
-
-´´´json
+```json
 {
-    "description": "Right cmd + left cmd to fn + F12",
+    "description": "Right cmd + left cmd to focus Ghostty and hidding other apps",
     "manipulators": [
         {
             "from": {
@@ -18,21 +16,21 @@ I made this for the [leader-key](https://github.com/mikker/LeaderKey.app) app.
                 "modifiers": { "mandatory": ["left_command"] }
             },
             "to": [
+                { "software_function": { "open_application": { "file_path": "/Applications/Ghostty.app" } } },
                 {
-                    "key_code": "f12",
-                    "modifiers": ["fn"]
+                    "key_code": "h",
+                    "modifiers": ["command", "option"]
                 }
             ],
             "type": "basic"
         }
     ]
-},
-´´´
+}
+```
+
 ### Caps Lock
 
-Caps Lock is only useful for people who write lots of SQL qeuries.
-
-´´´json
+```json
 {
     "description": "Caps Lock to Escape (alone) / Control (held with other key)",
     "manipulators": [
@@ -47,53 +45,50 @@ Caps Lock is only useful for people who write lots of SQL qeuries.
         }
     ]
 },
-´´´
+```
 
 ### Swap <> and ^° keys
 
-I did this because they switched posiotion (I don't know why after adding the Caps Lock key bind.
-
-´´´json
-                    {
-                        "description": "Swap <> and ^° keys",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "grave_accent_and_tilde" },
-                                "to": [{ "key_code": "non_us_backslash" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": { "key_code": "non_us_backslash" },
-                                "to": [{ "key_code": "grave_accent_and_tilde" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "grave_accent_and_tilde",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "non_us_backslash",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "non_us_backslash",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "grave_accent_and_tilde",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    }
-                ]
-´´´
+```json
+{
+    "description": "Swap <> and ^° keys",
+    "manipulators": [
+        {
+            "from": { "key_code": "grave_accent_and_tilde" },
+            "to": [{ "key_code": "non_us_backslash" }],
+            "type": "basic"
+        },
+        {
+            "from": { "key_code": "non_us_backslash" },
+            "to": [{ "key_code": "grave_accent_and_tilde" }],
+            "type": "basic"
+        },
+        {
+            "from": {
+                "key_code": "grave_accent_and_tilde",
+                "modifiers": { "mandatory": ["shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "non_us_backslash",
+                    "modifiers": ["shift"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "from": {
+                "key_code": "non_us_backslash",
+                "modifiers": { "mandatory": ["shift"] }
+            },
+            "to": [
+                {
+                    "key_code": "grave_accent_and_tilde",
+                    "modifiers": ["shift"]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
+```
