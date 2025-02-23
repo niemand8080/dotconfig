@@ -9,6 +9,9 @@ vim.keymap.set("n", "<leader>r", function()
     local filetype = vim.bo.filetype
     local in_tmux = string.gsub(vim.fn.system("echo $TERM_PROGRAM"), "%s+", "") == "tmux"
 
+    -- If you add the "{input}" string any where in the command, it will prompt
+    -- you to enter a command (with the default value you set the command to)
+    -- It will also replce the "{input}" string...
     local config = {
         [{ "rust" }] = {
             r = "cargo run",         -- run command
@@ -31,7 +34,7 @@ vim.keymap.set("n", "<leader>r", function()
     if not command then
         print(string.format('No action for key "%s" found!', key))
         return
-    elseif command ~= "{input}" then
+    elseif string.find(command, "{input}") then
         command = vim.fn.input({ prompt = "Change Command Preset: ", default = string.gsub(command, "{input}", "") })
     end
 
